@@ -35,9 +35,12 @@ function create() {
 
 
 	var phaserJSON = game.cache.getJSON('level');
-	console.log(phaserJSON);
     phaserJSON.level.forEach(function(item){
-    	eval("new " + item.type + "(game, " + item.x + "," + item.y + ");");
+    	var fn_item = window[item.type];
+    	if(typeof fn_item === 'function') {
+    		t_items = new fn_item(game, item.x, item.y);
+    		t_items.init();
+    	}
     });
 
 }
