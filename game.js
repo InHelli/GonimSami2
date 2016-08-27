@@ -10,10 +10,14 @@
 
 var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game', { preload: preload, create: create, update: update, render: render });
 var devices = ['dist'];
+
+
 function preload() {
 
     game.stage.backgroundColor = '#85b5e1';
-    devices.forEach(loadDevice);
+	game.load.json('gameData','/levels/level.json');
+
+	devices.forEach(loadDevice);
 
 }
 
@@ -24,12 +28,15 @@ function create() {
 	});
 	
     new dist(game, 100, 100);
+     
+    var phaserJSON = game.cache.getJSON('gameData');
+     console.log(phaserJSON.level[0]);
+
 
 }
 
 function update () {
-
-    
+ 
     
 }
 
