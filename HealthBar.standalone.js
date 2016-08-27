@@ -22,13 +22,14 @@
 
 var HealthBar = function(game, providedConfig) {
     this.game = game;
-
     this.setupConfiguration(providedConfig);
+    Phaser.Sprite.call(this, game, 0, 0);
     this.setPosition(this.config.x, this.config.y);
     this.drawBackground();
     this.drawHealthBar();
     this.setFixedToCamera(this.config.isFixedToCamera);
 };
+HealthBar.prototype = Object.create(Phaser.Sprite.prototype);
 HealthBar.prototype.constructor = HealthBar;
 
 HealthBar.prototype.setupConfiguration = function (providedConfig) {
@@ -76,6 +77,7 @@ HealthBar.prototype.drawBackground = function() {
     bmd.ctx.fill();
 
     this.bgSprite = this.game.add.sprite(this.x, this.y, bmd);
+    this.addChild(this.bgSprite);
     this.bgSprite.anchor.set(0.5);
 
     if(this.flipped){
@@ -92,7 +94,7 @@ HealthBar.prototype.drawHealthBar = function() {
 
     this.barSprite = this.game.add.sprite(this.x - this.bgSprite.width/2, this.y, bmd);
     this.barSprite.anchor.y = 0.5;
-
+    this.addChild(this.barSprite);
     if(this.flipped){
         this.barSprite.scale.x = -1;
     }

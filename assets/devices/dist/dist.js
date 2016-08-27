@@ -1,13 +1,13 @@
 dist = function(game,x,y){
 	
-    over = function (item){
-    	resfreshGraphics(0xFF0000);
+    this.over = function (item){
+    	this.resfreshGraphics(0xFF0000);
     }
-    out = function(item){
-    	resfreshGraphics(0xFFFFFF);
+    this.out = function(item){
+    	this.resfreshGraphics(0xFFFFFF);
     }
 
-    resfreshGraphics = function (color){
+    this.resfreshGraphics = function (color){
     	graphics.clear();
     	graphics.beginFill(0x888888);
 		graphics.lineStyle(2, color, 1);
@@ -18,16 +18,24 @@ dist = function(game,x,y){
 
     Phaser.Sprite.call(this, game, x, y);
 	var graphics = game.add.graphics();
-	resfreshGraphics(0xFFFFFF);
+	this.resfreshGraphics(0xFFFFFF);
 
 	this.addChild(graphics);
 	this.addChild(game.make.sprite(0,0,this.constructor.name));
     game.add.existing(this);
-    this.anchor.setTo(0.5, 0.5);
+    
 
     this.inputEnabled = true;
-    this.events.onInputOver.add(over, this);
-    this.events.onInputOut.add(out, this);
+    this.events.onInputOver.add(this.over, this);
+    this.events.onInputOut.add(this.out, this);
+
+    this.healthValue = 100;
+    this.myHealthBar = new HealthBar(this.game, {x: 25, y: 53, height: 10, width: 100});
+
+ 	this.addChild(this.myHealthBar);
+ 	this.minusButton = this.game.add.button(100, 300, 'button', onMinusClick, this, 1, 1, 1, 1);
+    this.plusButton = this.game.add.button(150, 300, 'button', onPlusClick, this, 0);
+    //this.addChild(myHealthBar);
 }
 
 dist.prototype = Object.create(Phaser.Sprite.prototype);
@@ -36,7 +44,19 @@ dist.prototype.constructor = dist;
 dist.prototype.update = function() {
 
     //  Automatically called by World.update
-    this.angle += 1;
+    // this.angle += 1;
 
 
 }; 
+
+function onPlusClick(){
+      this.healthValue = this.healthValue + 10;
+      if(this.healthValue > 100) this.healthValue = 100;
+      this.myHealthBar.setPercent(this.healthValue);
+}
+
+function onMinusClick(){
+      this.healthValue = this.healthValue - 10;
+      if(this.healthValue < 0) this.healthValue = 0;
+      this.myHealthBar.setPercent(this.healthValue);
+}
