@@ -1,7 +1,7 @@
 {
 	"level": [
 	 {
-	"type": "dist",
+	"type": "start",
 	"x": "50",
 	"y": "400",
   	"links": ["1"]
@@ -19,10 +19,10 @@
   	"links": ["3"]
   	},
   	{
-	"type": "filter",
+	"type": "dist",
 	"x": "650",
 	"y": "100",
-  	"links": ["3"]
+  	"links": []
   	}
   	]
 }
