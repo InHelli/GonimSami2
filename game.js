@@ -28,11 +28,6 @@ function create() {
 	devices.forEach(function(item){
 		eval(game.cache.getText(item));
 	});
-	
-    // new dist(game, 100, 100);
-
-    // new filter(game, 300, 100);
-
 
 	var phaserJSON = game.cache.getJSON('level');
     phaserJSON.level.forEach(function(item){
