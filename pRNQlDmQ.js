@@ -15,7 +15,7 @@ function preload() {
     game.stage.backgroundColor = '#85b5e1';
     game.load.crossOrigin = "anonymous";
 
-	// game.load.json('gameData','http://phaser.io/version.json');
+	game.load.json('gameData','/levels/level.json');
 	// game.cache.getJSON('gameData').
 	game.load.image('einstein', './assets/pics/test.jpg');
 	/*game.gameData = game.cache.getJSON('gameData');
@@ -35,9 +35,9 @@ function preload() {
 function create() {
 
      game.stage.backgroundColor = '#0072bc';
-
      
-
+     var phaserJSON = game.cache.getJSON('gameData');
+     console.log(phaserJSON);
  	game.add.sprite(0, 0, 'einstein');
 
 
