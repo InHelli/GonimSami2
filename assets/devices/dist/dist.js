@@ -1,26 +1,30 @@
 dist = function(game,x,y){
 	
+    over = function (item){
+    	resfreshGraphics(0xFF0000);
+    }
+    out = function(item){
+    	resfreshGraphics(0xFFFFFF);
+    }
 
-	Phaser.Sprite.call(this, game, x, y);
+    resfreshGraphics = function (color){
+    	graphics.clear();
+    	graphics.beginFill(0x888888);
+		graphics.lineStyle(2, color, 1);
+    	graphics.drawRect(0, 0, 100, 100);
+    	graphics.endFill();
+    }
+
+
+    Phaser.Sprite.call(this, game, x, y);
 	var graphics = game.add.graphics();
-	graphics.beginFill(0xFFFFFF);
-	graphics.lineStyle(2, 0x0000FF, 1);
-    graphics.drawRect(0, 0, 100, 100);
-    graphics.endFill();
+	resfreshGraphics(0xFFFFFF);
+
 	this.addChild(graphics);
 	this.addChild(game.make.sprite(0,0,this.constructor.name));
     game.add.existing(this);
-    this.anchor.set(0.5);
-    
+    this.anchor.setTo(0.5, 0.5);
 
-    over = function (item){
-    	graphics.graphicsData[0].fillColor = 0xFF0000;
-    	console.log(graphics.graphicsData[0].fillColor);
-    }
-    out = function(item){
-    	graphics.graphicsData[0].fillColor = 0x5B5B5B;
-    	console.log(graphics.graphicsData[0].fillColor);
-    }
     this.inputEnabled = true;
     this.events.onInputOver.add(over, this);
     this.events.onInputOut.add(out, this);
