@@ -9,17 +9,17 @@
 
 
 var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game', { preload: preload, create: create, update: update, render: render });
-var devices = ['dist'];
+var devices = ['dist', 'filter'];
 
 
 function preload() {
 
     game.stage.backgroundColor = '#85b5e1';
-	game.load.json('gameData','/levels/level.json');
+	game.load.json('level','./assets/levels/level.json');
 
 	devices.forEach(loadDevice);
 
-	this.game.load.spritesheet('button', 'assets/buttons/plus_minus.png', 31, 31);
+	this.game.load.spritesheet('button', 'assets/pics/plus_minus.png', 31, 31);
 
 }
 
@@ -30,23 +30,16 @@ function create() {
 	});
 
 	
-    new dist(game, 100, 100);
+    // new dist(game, 100, 100);
 
-    new dist(game, 300, 300);
-
-
-// ----------------------------------------------
+    // new filter(game, 300, 100);
 
 
-
-
-
-// -----------------------------------------------
-
-     
-    var phaserJSON = game.cache.getJSON('gameData');
-     console.log(phaserJSON.level[0]);
-
+	var phaserJSON = game.cache.getJSON('level');
+	console.log(phaserJSON);
+    phaserJSON.level.forEach(function(item){
+    	eval("new " + item.type + "(game, " + item.x + "," + item.y + ");");
+    });
 
 }
 
