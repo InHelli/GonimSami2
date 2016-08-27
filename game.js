@@ -28,6 +28,7 @@ function create() {
 	devices.forEach(function(item){
 		eval(game.cache.getText(item));
 	});
+
 	
     new dist(game, 100, 100);
 
