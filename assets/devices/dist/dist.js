@@ -1,7 +1,6 @@
 dist = function(game,x,y){
 	
     Main_device.call(this, game, x, y);
-    this.prototype.over = function(item){};
 }
 
 dist.prototype = Object.create(Main_device.prototype);
