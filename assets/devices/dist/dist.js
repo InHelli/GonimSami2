@@ -6,6 +6,7 @@ dist = function(game,x,y){
 	graphics.beginFill(0xFFFFFF);
 	graphics.lineStyle(2, 0x0000FF, 1);
     graphics.drawRect(0, 0, 100, 100);
+    graphics.endFill();
 	this.addChild(graphics);
 	this.addChild(game.make.sprite(0,0,this.constructor.name));
     game.add.existing(this);
@@ -14,11 +15,11 @@ dist = function(game,x,y){
 
     over = function (item){
     	graphics.graphicsData[0].fillColor = 0xFF0000;
-    	console.log(graphics);
+    	console.log(graphics.graphicsData[0].fillColor);
     }
     out = function(item){
     	graphics.graphicsData[0].fillColor = 0x5B5B5B;
-    	console.log(graphics);
+    	console.log(graphics.graphicsData[0].fillColor);
     }
     this.inputEnabled = true;
     this.events.onInputOver.add(over, this);
