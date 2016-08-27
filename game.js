@@ -15,7 +15,7 @@ var devices = ['dist', 'filter'];
 function preload() {
 
     game.stage.backgroundColor = '#85b5e1';
-	game.load.json('gameData','assets/levels/level.json');
+	game.load.json('level','./assets/levels/level.json');
 
 	devices.forEach(loadDevice);
 
@@ -29,23 +29,16 @@ function create() {
 		eval(game.cache.getText(item));
 	});
 	
-    new dist(game, 100, 100);
+    // new dist(game, 100, 100);
 
-    new filter(game, 300, 300);
-
-
-// ----------------------------------------------
+    // new filter(game, 300, 100);
 
 
-
-
-
-// -----------------------------------------------
-
-     
-    var phaserJSON = game.cache.getJSON('gameData');
-     console.log(phaserJSON.level[0]);
-
+	var phaserJSON = game.cache.getJSON('level');
+	console.log(phaserJSON);
+    phaserJSON.level.forEach(function(item){
+    	eval("new " + item.type + "(game, " + item.x + "," + item.y + ");");
+    });
 
 }
 
