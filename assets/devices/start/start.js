@@ -6,12 +6,11 @@ start = function(game,x,y){
 
     }
     this.click = function(){
-    	this.value = 20;
+    	this.value = 1;
     	this.timeIsUp();
     }
     this.custom_init = function(){
     	this.events.onInputDown.add(this.click, this);
-    	this.value = 20;
     }
 
 }

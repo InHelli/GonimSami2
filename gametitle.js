@@ -21,7 +21,7 @@ gameTitle.prototype = {
 		// playButton.anchor.setTo(0.5,0.5);*/
 	},
 	playTheGame: function(num){
-		debugger;
+		
 		this.game.lvl =  num.lvl;
 		this.game.state.start("TheGame");
 	}

@@ -1,24 +1,28 @@
-dist = function(game,x,y){
+fire = function(game,x,y){
     Main_device.call(this, game, x, y);
+    
+    this.update =  function(){
 
-    this.update_timer = function(){
-        
-        if(this.currentTimer > 1){
-        	if(this.currentTimer % 10 ==  0){
-        		this.value++; 
-        	}
-            this.currentTimer =  this.currentTimer - 1;
-            this.myProgressBar.setPercent((this.currentTimer / this.maxTime) * 100);
-        }else if(this.currentTimer ==  1 && this.value > 0){
-            this.timeIsUp();
-        }
-        
     }
-}
+    this.click = function(){
+        this.value = 1;
+        this.links.forEach(function(item){
+            if(item.__proto__.constructor.name === 'dist' && item.value > 0){
+                var max = item.maxTime * 0.8;
+                var min = item.maxTime * 0.3;
+                var power = parseInt(Math.random() * (max - min) + min);
+                item.currentTimer += power;
+            }
+        }, this);
+    }
+    this.custom_init = function(){
+        this.events.onInputDown.add(this.click, this);
+    }
+};
 
-dist.prototype = Object.create(Main_device.prototype);
-dist.prototype.constructor = dist;
+fire.prototype = Object.create(Main_device.prototype);
+fire.prototype.constructor = fire;
 
-dist.prototype.update = function() {
+fire.prototype.update = function() {
 	Main_device.prototype.update();
 }; 

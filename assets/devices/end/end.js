@@ -9,9 +9,9 @@ end.prototype.update = function() {
 	Main_device.prototype.update();
 }; 
 
-end.prototype.timeIsUp = function(value) {
- 
+end.prototype.timeIsUp = function() {
     this.game.score += this.value;
+    console.log("Градус вашего напитка: " + this.value);
+    console.log("Общий градус: " + this.game.score);
     this.value = 0;
-    console.log(this.game.score);
 }
