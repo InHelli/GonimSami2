@@ -8,70 +8,63 @@
 
 
 
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game', { preload: preload, create: create, update: update, render: render });
-var devices_type = ['dist', 'filter','start'];
-var devices = [];
-
-function preload() {
-
-    game.stage.backgroundColor = '#85b5e1';
-    this.cache.removeJSON('level');
-	game.load.json('level','./assets/levels/level.json');
-
-	devices_type.forEach(loadDevice);
-
-	this.game.load.spritesheet('button', 'assets/pics/plus_minus.png', 31, 31);
-
-}
-
-
-function create() {
-	devices = [];
-	var graphics = game.add.graphics(100, 100);
-	devices_type.forEach(function(item){
-		eval(game.cache.getText(item));
-	});
+var theGame = function(game){
 	
-	var phaserJSON = game.cache.getJSON('level');
-    phaserJSON.level.forEach(function(item){
-    	var fn_item = window[item.type];
-    	if(typeof fn_item === 'function') {
-    		t_items = new fn_item(game, item.x, item.y);
-    		t_items.init();
-    		devices.push(t_items);
-    	}
-    });
-
-	graphics.lineStyle(20, 0x33FF00);
-	var indent = 50;
-	for (var item_key in phaserJSON.level) {
-        var item = phaserJSON.level[item_key];
-	    graphics.lineStyle(5, 0x33FF00);
-        item.links.forEach(function(item_link) {
-            graphics.moveTo(parseInt(item.x)-indent,parseInt(item.y)-indent);
-            var link =phaserJSON.level[parseInt(item_link)];
-            devices[item_key].setLink(devices[parseInt(item_link)]);
-            graphics.lineTo(parseInt(link.x)-indent, parseInt(link.y)-indent);
-
-        });
-    	
-
-    };
-
+	this.devices_type = ['dist', 'filter','start'];
+    this.devices = [];
+	
 }
 
-function update () {
- 
-    
-}
 
-function render () {
 
-}
+theGame.prototype = {
+    preload:function() {
 
-function loadDevice(name){
-	game.load.text(name, '/assets/devices/' + name + '/' + name + '.js');
-    game.load.image(name, 'assets/devices/' + name + '/' + name + '.png');
+        this.stage.backgroundColor = '#85b5e1';
+        this.cache.removeJSON('level');
+    	this.load.json('level','./assets/levels/level.json');
+    	var temp_load = this.load;
+    	this.devices_type.forEach(function (name){
+    	temp_load.text(name, '/assets/devices/' + name + '/' + name + '.js');
+        temp_load.image(name, 'assets/devices/' + name + '/' + name + '.png');
+    	});
+},
+    create:function () {
+
+    	this.graphics = this.add.graphics(100, 100);
+    	this.devices_type.forEach(function(item){
+    		eval(this.cache.getText(item));
+    	}, this);
+
+
+    	this.phaserJSON = this.cache.getJSON('level');
+    	this.phaserJSON.level.forEach(function(item){
+            var fn_item = window[item.type];
+            if (typeof fn_item === 'function') {
+                var t_items = new fn_item(this.game, item.x, item.y);
+                t_items.init();
+                this.devices.push(t_items);
+            }
+        }, this);
+
+
+    	var indent = 50	;
+        this.graphics.lineStyle(20, 0x33FF00);
+        var indent = 50;
+        for (var item_key in this.phaserJSON.level) {
+            var item = this.phaserJSON.level[item_key];
+            this.graphics.lineStyle(5, 0x33FF00);
+            item.links.forEach(function(item_link) {
+                this.graphics.moveTo(parseInt(item.x)-indent,parseInt(item.y)-indent);
+                var link =this.phaserJSON.level[parseInt(item_link)];
+                this.devices[item_key].setLink(this.devices[parseInt(item_link)]);
+                this.graphics.lineTo(parseInt(link.x)-indent, parseInt(link.y)-indent);
+
+            }, this);
+        };
+
+    }
+
 }
 
 function clone(obj) {
