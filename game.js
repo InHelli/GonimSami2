@@ -9,20 +9,21 @@
 
 
 var theGame = function(game){
-	
+	this.lvl = game.lvl;
+	this.lel = ['./assets/levels/level1.json','./assets/levels/level2.json','./assets/levels/level3.json'];
 	this.devices_type = ['dist', 'filter','start','end'];
     this.devices = [];
-	
 }
 
 
 
 theGame.prototype = {
+
     preload:function() {
 
         this.stage.backgroundColor = '#85b5e1';
         this.cache.removeJSON('level');
-    	this.load.json('level','./assets/levels/level.json');
+    	this.load.json('level',this.lel[this.game.lvl]);
     	var temp_load = this.load;
     	this.devices_type.forEach(function (name){
     	temp_load.text(name, '/assets/devices/' + name + '/' + name + '.js');
