@@ -8,3 +8,10 @@ end.prototype.constructor = end;
 end.prototype.update = function() {
 	Main_device.prototype.update();
 }; 
+
+end.prototype.timeIsUp = function(value) {
+ 
+    this.game.score += this.value;
+    this.value = 0;
+    console.log(this.game.score);
+}

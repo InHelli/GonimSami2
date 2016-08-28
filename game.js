@@ -10,7 +10,7 @@
 
 var theGame = function(game){
 	
-	this.devices_type = ['dist', 'filter','start'];
+	this.devices_type = ['dist', 'filter','start','end'];
     this.devices = [];
 	
 }
@@ -30,7 +30,7 @@ theGame.prototype = {
     	});
 },
     create:function () {
-
+        this.game.score = 0;
     	this.graphics = this.add.graphics(100, 100);
     	this.devices_type.forEach(function(item){
     		eval(this.cache.getText(item));
