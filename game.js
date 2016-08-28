@@ -11,7 +11,9 @@
 
 var theGame = function(game){
 	
+	this.lvl = game.lvl;
 	this.devices = ['dist', 'filter'];
+	this.lel = ['./assets/levels/level1.json','./assets/levels/level2.json','./assets/levels/level3.json'];
 	
 }
 // var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game', { preload: preload, create: create, update: update, render: render, });
@@ -22,7 +24,7 @@ theGame.prototype = {
  preload:function() {
 
     this.stage.backgroundColor = '#85b5e1';
-	this.load.json('level','./assets/levels/level.json');
+	this.load.json('level',this.lel[this.game.lvl]);
 	var temp_load = this.load;
 	this.devices.forEach(function (name){
 	temp_load.text(name, '/assets/devices/' + name + '/' + name + '.js');
